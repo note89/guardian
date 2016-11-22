@@ -165,7 +165,7 @@ defmodule Guardian do
     end
   end
 
-  defp do_refresh!(_jwt, claims, params) do
+  def do_refresh!(_jwt, claims, params) do
     params = Enum.into(params, %{})
     new_claims = claims
      |> Map.drop(["jti", "iat", "exp", "nbf"])
@@ -301,7 +301,7 @@ defmodule Guardian do
     {:ok, token}
   end
 
-  defp decode_token(token, secret) do
+  def decode_token(token, secret) do
     secret = secret || config(:secret_key)
     case JOSE.JWT.verify_strict(jose_jwk(secret), allowed_algos, token) do
       { true, jose_jwt, _ } ->  { :ok, jose_jwt.fields }
